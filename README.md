@@ -1,3 +1,8 @@
+> ⚠️ **This repository has moved to [accessibility-suite](https://github.com/mcp-tool-shop/accessibility-suite)**
+> Source now lives at: `src/a11y-lint/`
+
+---
+
 # a11y-lint
 
 ![a11y](https://img.shields.io/badge/a11y-low--vision--first-blue)
