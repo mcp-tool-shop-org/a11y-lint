@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "a11y-lint"
-version = "0.1.0"
+version = "0.1.1"
 description = "Accessibility linter for CLI output - validates error messages follow accessible patterns"
 readme = "README.md"
 requires-python = ">=3.10"
@@ -52,9 +52,9 @@ dev = [
 a11y-lint = "a11y_lint.cli:main"
 
 [project.urls]
-Homepage = "https://github.com/mcp-tool-shop/a11y-lint"
-Repository = "https://github.com/mcp-tool-shop/a11y-lint"
-Issues = "https://github.com/mcp-tool-shop/a11y-lint/issues"
+Homepage = "https://github.com/mcp-tool-shop-org/a11y-lint"
+Repository = "https://github.com/mcp-tool-shop-org/a11y-lint"
+Issues = "https://github.com/mcp-tool-shop-org/a11y-lint/issues"
 
 [tool.setuptools.packages.find]
 where = ["."]
