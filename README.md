@@ -1,19 +1,28 @@
-> ⚠️ **This repository has moved to [accessibility-suite](https://github.com/mcp-tool-shop/accessibility-suite)**
-> Source now lives at: `src/a11y-lint/`
-
+<p align="center">
+  <img src="logo.png" alt="a11y-lint logo" width="140" />
+</p>
+<h1 align="center">a11y-lint</h1>
+<p align="center">
+  <strong>Low-vision-first accessibility linting for CLI output.</strong><br/>
+  Part of <a href="https://mcp-tool-shop.github.io/">MCP Tool Shop</a>
+</p>
+<p align="center">
+  <a href="https://pypi.org/project/a11y-lint/"><img src="https://img.shields.io/pypi/v/a11y-lint?color=blue" alt="PyPI version" /></a>
+  <img src="https://img.shields.io/badge/a11y-low--vision--first-blue" alt="a11y" />
+  <img src="https://img.shields.io/badge/output-contract--stable-green" alt="contract" />
+  <img src="https://img.shields.io/badge/tests-176%2B-brightgreen" alt="tests" />
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-black" alt="license" /></a>
+</p>
 ---
-
-# a11y-lint
-
-![a11y](https://img.shields.io/badge/a11y-low--vision--first-blue)
-![contract](https://img.shields.io/badge/output-contract--stable-green)
-![tests](https://img.shields.io/badge/tests-176%2B-brightgreen)
-![license](https://img.shields.io/badge/license-MIT-black)
-
-**Low-vision-first accessibility linting for CLI output.**
-
 Validates that error messages follow accessible patterns with the **[OK]/[WARN]/[ERROR] + What/Why/Fix** structure.
-
+## Why
+Most CLI tools treat error output as an afterthought. Messages like ENOENT errors or cryptic fatal messages assume the user can visually parse dense terminal output and already knows what went wrong. For users with low vision, cognitive disabilities, or anyone working under stress, these messages are a barrier.
+**a11y-lint** catches these patterns before they ship:
+- Lines too long for magnified displays
+- ALL-CAPS text that hinders readability
+- Jargon with no explanation
+- Color as the only signal
+- Missing "why" and "fix" context
 ## Philosophy
 
 ### Rule Categories
@@ -57,7 +66,7 @@ pip install a11y-lint
 Or install from source:
 
 ```bash
-git clone https://github.com/mcp-tool-shop/a11y-lint.git
+git clone https://github.com/mcp-tool-shop-org/a11y-lint.git
 cd a11y-lint
 pip install -e ".[dev]"
 ```
