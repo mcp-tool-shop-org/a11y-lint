@@ -1,16 +1,15 @@
 """Tests for report_md module."""
 
-import pytest
 from io import StringIO
 
+from a11y_lint.errors import A11yMessage, Location
 from a11y_lint.report_md import (
-    render_message_md,
-    render_scorecard_md,
-    render_report_md,
     MarkdownReporter,
     generate_badge_md,
+    render_message_md,
+    render_report_md,
+    render_scorecard_md,
 )
-from a11y_lint.errors import A11yMessage, Level, Location
 from a11y_lint.scorecard import Scorecard
 
 

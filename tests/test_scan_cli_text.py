@@ -1,23 +1,21 @@
 """Tests for scan_cli_text module."""
 
-import pytest
-
+from a11y_lint.errors import ErrorCodes, Level
 from a11y_lint.scan_cli_text import (
-    Scanner,
-    scan,
-    get_rule_names,
+    MAX_LINE_LENGTH,
     RULES,
-    check_line_length,
+    Scanner,
     check_all_caps,
-    check_jargon,
+    check_ambiguous_pronouns,
     check_color_only,
     check_emoji_overuse,
-    check_missing_punctuation,
     check_error_structure,
-    check_ambiguous_pronouns,
-    MAX_LINE_LENGTH,
+    check_jargon,
+    check_line_length,
+    check_missing_punctuation,
+    get_rule_names,
+    scan,
 )
-from a11y_lint.errors import Level, ErrorCodes
 
 
 class TestCheckLineLength:
@@ -118,12 +116,12 @@ class TestCheckEmojiOveruse:
         assert result is None
 
     def test_few_emoji_ok(self) -> None:
-        result = check_emoji_overuse("Hello \U0001F600\U0001F600\U0001F600", None, 1)
+        result = check_emoji_overuse("Hello \U0001f600\U0001f600\U0001f600", None, 1)
         assert result is None  # 3 or fewer is OK
 
     def test_many_emoji_warns(self) -> None:
         result = check_emoji_overuse(
-            "Hello \U0001F600\U0001F600\U0001F600\U0001F600\U0001F600", None, 1
+            "Hello \U0001f600\U0001f600\U0001f600\U0001f600\U0001f600", None, 1
         )
         assert result is not None
         assert result.level == Level.WARN
@@ -161,15 +159,11 @@ class TestCheckErrorStructure:
         assert result is None
 
     def test_error_with_explanation_ok(self) -> None:
-        result = check_error_structure(
-            "ERROR: Failed because the file was not found", None, 1
-        )
+        result = check_error_structure("ERROR: Failed because the file was not found", None, 1)
         assert result is None
 
     def test_error_with_fix_ok(self) -> None:
-        result = check_error_structure(
-            "ERROR: Failed. Try running as administrator.", None, 1
-        )
+        result = check_error_structure("ERROR: Failed. Try running as administrator.", None, 1)
         assert result is None
 
     def test_error_without_context_warns(self) -> None:
@@ -198,7 +192,9 @@ class TestCheckAmbiguousPronouns:
 
     def test_pronoun_mid_sentence_ok(self) -> None:
         # Only check at start of line
-        result = check_ambiguous_pronouns("The process failed because it ran out of memory", None, 1)
+        result = check_ambiguous_pronouns(
+            "The process failed because it ran out of memory", None, 1
+        )
         assert result is None
 
 

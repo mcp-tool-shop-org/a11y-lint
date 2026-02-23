@@ -1,9 +1,9 @@
 """Tests for CLI module."""
 
 import json
-import pytest
-import tempfile
 from pathlib import Path
+
+import pytest
 from click.testing import CliRunner
 
 from a11y_lint.cli import main
@@ -54,7 +54,9 @@ class TestMainCommand:
     def test_version(self, runner: CliRunner) -> None:
         result = runner.invoke(main, ["--version"])
         assert result.exit_code == 0
-        assert "0.1.0" in result.output
+        from a11y_lint import __version__
+
+        assert __version__ in result.output
 
 
 class TestScanCommand:
@@ -149,9 +151,7 @@ class TestScorecardCommand:
         assert "shields.io" in result.output
 
     def test_scorecard_custom_name(self, runner: CliRunner, clean_file: Path) -> None:
-        result = runner.invoke(
-            main, ["scorecard", "--name=Custom Name", str(clean_file)]
-        )
+        result = runner.invoke(main, ["scorecard", "--name=Custom Name", str(clean_file)])
         assert "Custom Name" in result.output
 
 
@@ -162,9 +162,7 @@ class TestReportCommand:
         result = runner.invoke(main, ["report", str(sample_file)])
         assert "# Accessibility Report" in result.output
 
-    def test_report_to_file(
-        self, runner: CliRunner, sample_file: Path, tmp_path: Path
-    ) -> None:
+    def test_report_to_file(self, runner: CliRunner, sample_file: Path, tmp_path: Path) -> None:
         output = tmp_path / "report.md"
         result = runner.invoke(main, ["report", str(sample_file), "-o", str(output)])
         assert result.exit_code == 0 or result.exit_code == 1  # Depends on errors
@@ -172,9 +170,7 @@ class TestReportCommand:
         assert "# Accessibility Report" in output.read_text(encoding="utf-8")
 
     def test_report_custom_title(self, runner: CliRunner, clean_file: Path) -> None:
-        result = runner.invoke(
-            main, ["report", "--title=Custom Title", str(clean_file)]
-        )
+        result = runner.invoke(main, ["report", "--title=Custom Title", str(clean_file)])
         assert "# Custom Title" in result.output
 
 

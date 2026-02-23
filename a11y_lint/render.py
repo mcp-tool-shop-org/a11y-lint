@@ -12,8 +12,8 @@ Color Philosophy:
 from __future__ import annotations
 
 import os
-from typing import TextIO
 import sys
+from typing import TextIO
 
 from .errors import A11yMessage, Level
 
@@ -42,7 +42,9 @@ def should_use_color(stream: TextIO | None = None) -> bool:
 
     # Check if stream is a TTY
     stream = stream or sys.stdout
-    return hasattr(stream, "isatty") and stream.isatty()
+    if stream is None or not hasattr(stream, "isatty"):
+        return False
+    return stream.isatty()
 
 
 # ANSI color codes for terminal output

@@ -4,61 +4,54 @@ Validates that CLI error messages follow accessible patterns
 with [OK]/[WARN]/[ERROR] + What/Why/Fix structure.
 """
 
-__version__ = "0.1.0"
+__version__ = "0.3.0"
 
-from .errors import A11yMessage, Level, Location, ErrorCodes
-from .render import render, render_plain, render_colored, Renderer, should_use_color
-from .scan_cli_text import Scanner, scan, get_rule_names, Rule, RULES, RuleCategory
-from .scorecard import Scorecard, RuleScore, ScorecardBuilder, create_scorecard
+from .errors import A11yMessage, ErrorCodes, Level, Location
+from .render import Renderer, render, render_colored, render_plain, should_use_color
 from .report_md import (
     MarkdownReporter,
+    generate_badge_md,
     render_report_md,
     render_scorecard_md,
-    generate_badge_md,
 )
+from .scan_cli_text import RULES, Rule, RuleCategory, Scanner, get_rule_names, scan
+from .scorecard import RuleScore, Scorecard, ScorecardBuilder, create_scorecard
 from .validate import (
-    validate_dict,
-    validate_message,
-    is_valid,
-    validate_json_file,
     MessageValidator,
+    is_valid,
+    validate_dict,
+    validate_json_file,
+    validate_message,
 )
 
 __all__ = [
-    # Version
-    "__version__",
-    # Errors
+    "RULES",
     "A11yMessage",
+    "ErrorCodes",
     "Level",
     "Location",
-    "ErrorCodes",
-    # Rendering
-    "render",
-    "render_plain",
-    "render_colored",
-    "Renderer",
-    "should_use_color",
-    # Scanning
-    "Scanner",
-    "scan",
-    "get_rule_names",
-    "Rule",
-    "RULES",
-    "RuleCategory",
-    # Scorecard
-    "Scorecard",
-    "RuleScore",
-    "ScorecardBuilder",
-    "create_scorecard",
-    # Markdown Reports
     "MarkdownReporter",
+    "MessageValidator",
+    "Renderer",
+    "Rule",
+    "RuleCategory",
+    "RuleScore",
+    "Scanner",
+    "Scorecard",
+    "ScorecardBuilder",
+    "__version__",
+    "create_scorecard",
+    "generate_badge_md",
+    "get_rule_names",
+    "is_valid",
+    "render",
+    "render_colored",
+    "render_plain",
     "render_report_md",
     "render_scorecard_md",
-    "generate_badge_md",
-    # Validation
+    "scan",
+    "should_use_color",
     "validate_dict",
-    "validate_message",
-    "is_valid",
     "validate_json_file",
-    "MessageValidator",
+    "validate_message",
 ]

@@ -1,20 +1,19 @@
 """Tests for validate module."""
 
 import json
-import pytest
-from pathlib import Path
 import tempfile
+from pathlib import Path
 
-from a11y_lint.validate import (
-    validate_dict,
-    validate_message,
-    is_valid,
-    validate_json_file,
-    validate_and_convert,
-    MessageValidator,
-    load_schema,
-)
 from a11y_lint.errors import A11yMessage, Level
+from a11y_lint.validate import (
+    MessageValidator,
+    is_valid,
+    load_schema,
+    validate_and_convert,
+    validate_dict,
+    validate_json_file,
+    validate_message,
+)
 
 
 class TestLoadSchema:
@@ -141,9 +140,7 @@ class TestValidateJsonFile:
 
     def test_valid_single_message(self) -> None:
         data = {"level": "OK", "code": "TST001", "what": "Test"}
-        with tempfile.NamedTemporaryFile(
-            mode="w", suffix=".json", delete=False
-        ) as f:
+        with tempfile.NamedTemporaryFile(mode="w", suffix=".json", delete=False) as f:
             json.dump(data, f)
             f.flush()
             valid, errors = validate_json_file(f.name)
@@ -156,9 +153,7 @@ class TestValidateJsonFile:
             {"level": "OK", "code": "TST001", "what": "Test 1"},
             {"level": "WARN", "code": "TST002", "what": "Test 2", "why": "Reason"},
         ]
-        with tempfile.NamedTemporaryFile(
-            mode="w", suffix=".json", delete=False
-        ) as f:
+        with tempfile.NamedTemporaryFile(mode="w", suffix=".json", delete=False) as f:
             json.dump(data, f)
             f.flush()
             valid, errors = validate_json_file(f.name)
@@ -171,9 +166,7 @@ class TestValidateJsonFile:
             {"level": "OK", "code": "TST001", "what": "Test 1"},
             {"level": "INVALID", "code": "TST002", "what": "Test 2"},
         ]
-        with tempfile.NamedTemporaryFile(
-            mode="w", suffix=".json", delete=False
-        ) as f:
+        with tempfile.NamedTemporaryFile(mode="w", suffix=".json", delete=False) as f:
             json.dump(data, f)
             f.flush()
             valid, errors = validate_json_file(f.name)
@@ -182,9 +175,7 @@ class TestValidateJsonFile:
         Path(f.name).unlink()
 
     def test_invalid_json(self) -> None:
-        with tempfile.NamedTemporaryFile(
-            mode="w", suffix=".json", delete=False
-        ) as f:
+        with tempfile.NamedTemporaryFile(mode="w", suffix=".json", delete=False) as f:
             f.write("not valid json")
             f.flush()
             valid, errors = validate_json_file(f.name)

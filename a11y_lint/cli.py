@@ -12,12 +12,11 @@ from pathlib import Path
 import click
 
 from . import __version__
-from .errors import A11yMessage
-from .render import Renderer, format_for_file
-from .scan_cli_text import Scanner, get_rule_names
-from .scorecard import create_scorecard
+from .render import Renderer
 from .report_md import MarkdownReporter, generate_badge_md
-from .validate import validate_json_file, MessageValidator
+from .scan_cli_text import Scanner
+from .scorecard import create_scorecard
+from .validate import validate_json_file
 
 
 @click.group()
@@ -139,9 +138,7 @@ def scan(
 
     # Exit with error if issues found
     exit_code = 0
-    if scanner.error_count > 0:
-        exit_code = 1
-    elif strict and scanner.warn_count > 0:
+    if scanner.error_count > 0 or (strict and scanner.warn_count > 0):
         exit_code = 1
 
     sys.exit(exit_code)

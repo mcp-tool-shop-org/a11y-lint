@@ -2,7 +2,7 @@
 
 import pytest
 
-from a11y_lint.errors import A11yMessage, Level, Location, ErrorCodes, CODE_PATTERN
+from a11y_lint.errors import CODE_PATTERN, A11yMessage, ErrorCodes, Level, Location
 
 
 class TestLevel:

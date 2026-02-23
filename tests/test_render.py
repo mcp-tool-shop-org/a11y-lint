@@ -1,19 +1,18 @@
 """Tests for render module."""
 
 import io
-import pytest
 
+from a11y_lint.errors import A11yMessage, Level, Location
 from a11y_lint.render import (
-    render,
-    render_plain,
-    render_colored,
-    render_batch,
+    Colors,
     Renderer,
     format_for_file,
-    Colors,
     get_level_color,
+    render,
+    render_batch,
+    render_colored,
+    render_plain,
 )
-from a11y_lint.errors import A11yMessage, Level, Location
 
 
 class TestRenderPlain:

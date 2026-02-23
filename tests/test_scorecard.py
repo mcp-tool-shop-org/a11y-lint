@@ -1,14 +1,12 @@
 """Tests for scorecard module."""
 
-import pytest
-
+from a11y_lint.errors import A11yMessage
 from a11y_lint.scorecard import (
     RuleScore,
     Scorecard,
     ScorecardBuilder,
     create_scorecard,
 )
-from a11y_lint.errors import A11yMessage, Level
 
 
 class TestRuleScore:
@@ -83,9 +81,7 @@ class TestScorecard:
 
     def test_add_error_message(self) -> None:
         card = Scorecard(name="Test")
-        card.add_message(
-            A11yMessage.error("TST001", "Error", "Why", "Fix", rule="test-rule")
-        )
+        card.add_message(A11yMessage.error("TST001", "Error", "Why", "Fix", rule="test-rule"))
         assert card.total_errors == 1
         assert card.is_passing is False
 

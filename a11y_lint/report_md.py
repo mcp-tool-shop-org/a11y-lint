@@ -7,7 +7,6 @@ from __future__ import annotations
 
 from datetime import datetime
 from typing import TextIO
-import io
 
 from .errors import A11yMessage, Level
 from .scorecard import Scorecard

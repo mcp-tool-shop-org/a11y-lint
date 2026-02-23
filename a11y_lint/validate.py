@@ -9,10 +9,9 @@ import json
 from pathlib import Path
 from typing import Any
 
-import jsonschema
-from jsonschema import Draft202012Validator, ValidationError
+from jsonschema import Draft202012Validator
 
-from .errors import A11yMessage, Level
+from .errors import A11yMessage
 
 # Path to the schema file
 SCHEMA_PATH = Path(__file__).parent / "schemas" / "cli.error.schema.v0.1.json"
@@ -20,7 +19,7 @@ SCHEMA_PATH = Path(__file__).parent / "schemas" / "cli.error.schema.v0.1.json"
 
 def load_schema() -> dict[str, Any]:
     """Load the CLI error schema from disk."""
-    with open(SCHEMA_PATH, "r", encoding="utf-8") as f:
+    with open(SCHEMA_PATH, encoding="utf-8") as f:
         return json.load(f)
 
 
@@ -99,7 +98,7 @@ def validate_json_file(path: Path | str) -> tuple[list[dict[str, Any]], list[str
     errors: list[str] = []
 
     try:
-        with open(path, "r", encoding="utf-8") as f:
+        with open(path, encoding="utf-8") as f:
             data = json.load(f)
     except json.JSONDecodeError as e:
         return [], [f"Invalid JSON: {e}"]
@@ -206,10 +205,7 @@ class MessageValidator:
         if self.is_all_valid:
             return f"All {total} messages valid"
 
-        return (
-            f"Validated {total} messages: "
-            f"{self.valid_count} valid, {self.invalid_count} invalid"
-        )
+        return f"Validated {total} messages: {self.valid_count} valid, {self.invalid_count} invalid"
 
     def error_report(self) -> str:
         """Get detailed error report."""

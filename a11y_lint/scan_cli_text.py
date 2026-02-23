@@ -13,9 +13,9 @@ enforces accessibility policy beyond minimum WCAG compliance.
 from __future__ import annotations
 
 import re
-from dataclasses import dataclass, field
+from collections.abc import Callable
+from dataclasses import dataclass
 from enum import Enum
-from typing import Callable
 
 from .errors import A11yMessage, ErrorCodes, Level, Location
 
@@ -47,9 +47,7 @@ class Rule:
     category: RuleCategory = RuleCategory.POLICY
     wcag_ref: str | None = None
 
-    def __call__(
-        self, text: str, file: str | None = None, line: int = 1
-    ) -> A11yMessage | None:
+    def __call__(self, text: str, file: str | None = None, line: int = 1) -> A11yMessage | None:
         """Run the rule check."""
         return self.check(text, file, line)
 
@@ -200,14 +198,10 @@ def check_emoji_overuse(text: str, file: str | None, line_num: int) -> A11yMessa
     return None
 
 
-def check_missing_punctuation(
-    text: str, file: str | None, line_num: int
-) -> A11yMessage | None:
+def check_missing_punctuation(text: str, file: str | None, line_num: int) -> A11yMessage | None:
     """Check if error messages lack proper punctuation."""
     # Only check lines that look like error messages
-    if not any(
-        marker in text.upper() for marker in ["ERROR", "WARN", "FAIL", "INVALID"]
-    ):
+    if not any(marker in text.upper() for marker in ["ERROR", "WARN", "FAIL", "INVALID"]):
         return None
 
     # Check if the message ends with punctuation
@@ -227,22 +221,17 @@ def check_missing_punctuation(
     return None
 
 
-def check_error_structure(
-    text: str, file: str | None, line_num: int
-) -> A11yMessage | None:
+def check_error_structure(text: str, file: str | None, line_num: int) -> A11yMessage | None:
     """Check if error messages follow the What/Why/Fix structure."""
     # Look for error indicators
     if not any(marker in text.upper() for marker in ["ERROR", "FAIL", "EXCEPTION"]):
         return None
 
     # Check for explanation (why/because/since)
-    has_why = any(
-        word in text.lower() for word in ["because", "since", "due to", "reason"]
-    )
+    has_why = any(word in text.lower() for word in ["because", "since", "due to", "reason"])
     # Check for fix suggestion
     has_fix = any(
-        word in text.lower()
-        for word in ["try", "fix", "resolve", "solution", "to fix", "you can"]
+        word in text.lower() for word in ["try", "fix", "resolve", "solution", "to fix", "you can"]
     )
 
     if not has_why and not has_fix:
@@ -260,9 +249,7 @@ def check_error_structure(
     return None
 
 
-def check_ambiguous_pronouns(
-    text: str, file: str | None, line_num: int
-) -> A11yMessage | None:
+def check_ambiguous_pronouns(text: str, file: str | None, line_num: int) -> A11yMessage | None:
     """Check for ambiguous pronouns without clear referents."""
     # Patterns like "it failed" or "this is invalid" at the start
     ambiguous = re.search(
@@ -290,37 +277,62 @@ def check_ambiguous_pronouns(
 RULES: list[Rule] = [
     # Policy rules (cognitive accessibility, best practices)
     Rule(
-        "line-length", ErrorCodes.LINE_TOO_LONG, "Check line length",
-        check_line_length, RuleCategory.POLICY
+        "line-length",
+        ErrorCodes.LINE_TOO_LONG,
+        "Check line length",
+        check_line_length,
+        RuleCategory.POLICY,
     ),
     Rule(
-        "no-all-caps", ErrorCodes.ALL_CAPS_MESSAGE, "Check for all caps",
-        check_all_caps, RuleCategory.POLICY
+        "no-all-caps",
+        ErrorCodes.ALL_CAPS_MESSAGE,
+        "Check for all caps",
+        check_all_caps,
+        RuleCategory.POLICY,
     ),
     Rule(
-        "plain-language", ErrorCodes.JARGON_DETECTED, "Check for jargon",
-        check_jargon, RuleCategory.POLICY
+        "plain-language",
+        ErrorCodes.JARGON_DETECTED,
+        "Check for jargon",
+        check_jargon,
+        RuleCategory.POLICY,
     ),
     Rule(
-        "emoji-moderation", ErrorCodes.EMOJI_OVERUSE, "Check emoji overuse",
-        check_emoji_overuse, RuleCategory.POLICY
+        "emoji-moderation",
+        ErrorCodes.EMOJI_OVERUSE,
+        "Check emoji overuse",
+        check_emoji_overuse,
+        RuleCategory.POLICY,
     ),
     Rule(
-        "punctuation", ErrorCodes.NO_PUNCTUATION, "Check punctuation",
-        check_missing_punctuation, RuleCategory.POLICY
+        "punctuation",
+        ErrorCodes.NO_PUNCTUATION,
+        "Check punctuation",
+        check_missing_punctuation,
+        RuleCategory.POLICY,
     ),
     Rule(
-        "error-structure", ErrorCodes.MISSING_WHY, "Check error structure",
-        check_error_structure, RuleCategory.POLICY
+        "error-structure",
+        ErrorCodes.MISSING_WHY,
+        "Check error structure",
+        check_error_structure,
+        RuleCategory.POLICY,
     ),
     Rule(
-        "no-ambiguous-pronouns", ErrorCodes.AMBIGUOUS_PRONOUN, "Check ambiguous pronouns",
-        check_ambiguous_pronouns, RuleCategory.POLICY
+        "no-ambiguous-pronouns",
+        ErrorCodes.AMBIGUOUS_PRONOUN,
+        "Check ambiguous pronouns",
+        check_ambiguous_pronouns,
+        RuleCategory.POLICY,
     ),
     # WCAG rules (mapped to success criteria)
     Rule(
-        "no-color-only", ErrorCodes.COLOR_ONLY_INFO, "Check color-only info",
-        check_color_only, RuleCategory.WCAG, wcag_ref="1.4.1"
+        "no-color-only",
+        ErrorCodes.COLOR_ONLY_INFO,
+        "Check color-only info",
+        check_color_only,
+        RuleCategory.WCAG,
+        wcag_ref="1.4.1",
     ),
 ]
 
@@ -395,7 +407,7 @@ class Scanner:
         Returns:
             List of issues found
         """
-        with open(path, "r", encoding="utf-8") as f:
+        with open(path, encoding="utf-8") as f:
             text = f.read()
         return self.scan_text(text, file=path)
 

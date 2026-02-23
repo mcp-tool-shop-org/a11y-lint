@@ -8,9 +8,10 @@
 </p>
 <p align="center">
   <a href="https://pypi.org/project/a11y-lint/"><img src="https://img.shields.io/pypi/v/a11y-lint?color=blue" alt="PyPI version" /></a>
+  <a href="https://github.com/mcp-tool-shop-org/a11y-lint/actions/workflows/ci.yml"><img src="https://github.com/mcp-tool-shop-org/a11y-lint/actions/workflows/ci.yml/badge.svg" alt="CI" /></a>
+  <img src="https://img.shields.io/badge/python-3.11%20%7C%203.12-blue" alt="Python versions" />
   <img src="https://img.shields.io/badge/a11y-low--vision--first-blue" alt="a11y" />
   <img src="https://img.shields.io/badge/output-contract--stable-green" alt="contract" />
-  <img src="https://img.shields.io/badge/tests-176%2B-brightgreen" alt="tests" />
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-black" alt="license" /></a>
 </p>
 ---
@@ -62,6 +63,8 @@ Scores and badges are **informational only**. They do NOT imply WCAG conformance
 ```bash
 pip install a11y-lint
 ```
+
+Requires Python 3.11 or later.
 
 Or install from source:
 
@@ -272,17 +275,30 @@ markdown = render_report_md(messages, title="My Report")
 3. **Track baselines**: Use JSON output to detect regressions
 4. **Treat badges as informational**: They don't imply conformance
 
+## Companion Tools
+
+| Tool | Description |
+|------|-------------|
+| [a11y-ci](https://pypi.org/project/a11y-ci/) | CI gate for a11y-lint scorecards with baseline regression detection |
+| [a11y-assist](https://pypi.org/project/a11y-assist/) | Deterministic accessibility assistance for CLI failures |
+
 ## Development
 
 ```bash
 # Install dev dependencies
 pip install -e ".[dev]"
 
-# Run tests
+# Run tests (176 tests)
 pytest
 
 # Type check
-pyright
+pyright a11y_lint
+
+# Lint
+ruff check .
+
+# Format
+ruff format .
 ```
 
 ## License

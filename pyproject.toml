@@ -4,10 +4,10 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "a11y-lint"
-version = "0.2.1"
+version = "0.3.0"
 description = "Accessibility linter for CLI output - validates error messages follow accessible patterns"
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 license = {text = "MIT"}
 authors = [
     { name = "mcp-tool-shop", email = "64996768+mcp-tool-shop@users.noreply.github.com" }
@@ -29,7 +29,6 @@ classifiers = [
     "Intended Audience :: Developers",
     "License :: OSI Approved :: MIT License",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Topic :: Software Development :: Quality Assurance",
@@ -46,6 +45,7 @@ dev = [
     "pytest>=7.4.0",
     "pytest-cov>=4.1.0",
     "pyright>=1.1.350",
+    "ruff>=0.3",
 ]
 
 [project.scripts]
@@ -70,6 +70,14 @@ python_functions = ["test_*"]
 addopts = "-v --tb=short"
 
 [tool.pyright]
-include = ["a11y_lint", "tests"]
-pythonVersion = "3.10"
+include = ["a11y_lint"]
+pythonVersion = "3.11"
 typeCheckingMode = "standard"
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM", "RUF"]
+ignore = ["E501"]
