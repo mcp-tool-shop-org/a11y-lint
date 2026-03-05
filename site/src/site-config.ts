@@ -14,7 +14,7 @@ export const config: SiteConfig = {
     headlineAccent: 'for accessibility.',
     description: 'Catches inaccessible error messages before they ship — lines too long, ALL-CAPS text, missing context, color-only signals, and jargon without explanation.',
     primaryCta: { href: '#usage', label: 'Get started' },
-    secondaryCta: { href: '#rules', label: 'See rules' },
+    secondaryCta: { href: 'handbook/', label: 'Read the Handbook' },
     previews: [
       { label: 'Install', code: 'pip install a11y-lint' },
       { label: 'Scan', code: 'a11y-lint scan output.txt' },
